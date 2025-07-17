@@ -2,7 +2,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Send, Mic, MicOff, Brain, Sparkles } from "lucide-react";
+import { Send, Mic, MicOff, Brain, Sparkles, Loader2 } from "lucide-react";
+import { ChatMessage } from "./ChatMessage";
+import { useChat } from "@/hooks/useChat";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const mockConversations = [
   {
@@ -38,16 +41,21 @@ const mockConversations = [
 ];
 
 export const ConversationalInterface = () => {
-  const [message, setMessage] = useState("");
+  const { messages, isTyping, sendMessage } = useChat();
+  const [inputValue, setInputValue] = useState("");
   const [isListening, setIsListening] = useState(false);
-  const [isTyping, setIsTyping] = useState(false);
 
-  const handleSendMessage = () => {
-    if (message.trim()) {
-      setIsTyping(true);
-      setMessage("");
-      // Simulate AI response delay
-      setTimeout(() => setIsTyping(false), 2000);
+  const handleSendMessage = async () => {
+    if (inputValue.trim()) {
+      await sendMessage(inputValue);
+      setInputValue("");
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
     }
   };
 
@@ -87,65 +95,55 @@ export const ConversationalInterface = () => {
               </div>
 
               {/* Chat Messages */}
-              <div className="space-y-4 mb-6 max-h-96 overflow-y-auto">
-                {mockConversations.map((conv, index) => (
-                  <div key={index} className={`flex ${conv.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-                    <div className={`max-w-[80%] p-3 rounded-lg ${
-                      conv.type === 'user' 
-                        ? 'bg-primary text-primary-foreground' 
-                        : 'bg-muted text-muted-foreground'
-                    }`}>
-                      <p className="text-sm">{conv.message}</p>
-                      {conv.insights && (
-                        <div className="mt-3 grid grid-cols-3 gap-2">
-                          {conv.insights.map((insight, idx) => (
-                            <div key={idx} className="text-center p-2 bg-background/20 rounded">
-                              <div className={`text-xs font-medium ${
-                                insight.trend === 'up' ? 'text-success' : 
-                                insight.trend === 'down' ? 'text-destructive' : 'text-foreground'
-                              }`}>
-                                {insight.value}
-                              </div>
-                              <div className="text-xs opacity-70">{insight.label}</div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                      <p className="text-xs opacity-50 mt-2">{conv.timestamp}</p>
-                    </div>
-                  </div>
-                ))}
-                
-                {isTyping && (
-                  <div className="flex justify-start">
-                    <div className="bg-muted p-3 rounded-lg">
-                      <div className="flex gap-1">
-                        <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce delay-100"></div>
-                        <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce delay-200"></div>
+              <ScrollArea className="h-96 mb-6">
+                <div className="space-y-4 p-2">
+                  {messages.map((message) => (
+                    <ChatMessage
+                      key={message.id}
+                      message={message.message}
+                      isUser={message.isUser}
+                      timestamp={message.timestamp}
+                    />
+                  ))}
+                  
+                  {isTyping && (
+                    <div className="flex gap-3 p-4">
+                      <div className="w-8 h-8 rounded-full bg-gradient-accent flex items-center justify-center text-xs font-bold">
+                        AI
+                      </div>
+                      <div className="bg-muted p-3 rounded-lg flex items-center gap-2">
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        <span className="text-sm text-muted-foreground">AI is thinking...</span>
                       </div>
                     </div>
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
+              </ScrollArea>
 
               {/* Input Area */}
               <div className="flex gap-2">
                 <Input
                   placeholder="Ask about your health, finances, or goals..."
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyPress={handleKeyPress}
                   className="flex-1"
+                  disabled={isTyping}
                 />
                 <Button 
                   variant={isListening ? "destructive" : "outline"} 
                   size="icon"
                   onClick={toggleVoice}
+                  disabled={isTyping}
                 >
                   {isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
                 </Button>
-                <Button variant="accent" size="icon" onClick={handleSendMessage}>
+                <Button 
+                  variant="accent" 
+                  size="icon" 
+                  onClick={handleSendMessage}
+                  disabled={isTyping || !inputValue.trim()}
+                >
                   <Send className="h-4 w-4" />
                 </Button>
               </div>
