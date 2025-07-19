@@ -2,13 +2,15 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AuthModal } from "./AuthModal";
-import { Menu, X, Bell, Settings, User, Home, BarChart3, MessageCircle, Puzzle } from "lucide-react";
+import { Menu, X, Bell, Settings, User, Home, BarChart3, MessageCircle, Puzzle, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navigationItems = [
   { icon: Home, label: "Dashboard", href: "#", active: true },
   { icon: BarChart3, label: "Analytics", href: "#analytics" },
   { icon: MessageCircle, label: "AI Coach", href: "#chat" },
+  { icon: Bell, label: "Notifications", href: "#notifications" },
+  { icon: Users, label: "Community", href: "#community" },
   { icon: Puzzle, label: "Plugins", href: "#plugins", badge: "Beta" },
 ];
 
