@@ -23,6 +23,7 @@ const buttonVariants = cva(
         glow: "bg-primary-glow text-foreground hover:shadow-glow hover:scale-105 transition-all duration-300",
         success: "bg-success text-success-foreground hover:bg-success/90",
         warning: "bg-warning text-warning-foreground hover:bg-warning/90",
+        premium: "bg-gradient-primary text-white hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 border border-primary/20",
       },
       size: {
         default: "h-10 px-4 py-2",
