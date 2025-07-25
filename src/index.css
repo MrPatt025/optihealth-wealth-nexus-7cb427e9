@@ -145,4 +145,24 @@ All colors MUST be HSL.
   .text-gradient {
     @apply bg-gradient-hero bg-clip-text text-transparent;
   }
+  
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+  
+  .hover-glow {
+    @apply transition-all duration-300 hover:shadow-glow hover:scale-105;
+  }
+  
+  .shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: shimmer 2s infinite;
+  }
+  
+  .bg-grid {
+    background-image: 
+      linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
 }

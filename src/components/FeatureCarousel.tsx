@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight, Heart, DollarSign, Brain, Users, Shield, Smartphone } from "lucide-react";
+import { MagicCard } from "@/components/ui/magic-card";
+import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 
 const features = [
   {
@@ -97,22 +99,23 @@ export const FeatureCarousel = () => {
           {/* Feature Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {visibleFeatures.map((feature, index) => (
-              <Card 
+              <MagicCard 
                 key={feature.id}
-                className="group hover:shadow-card transition-all duration-300 hover:scale-[1.02] bg-gradient-card border-border/50"
+                className="group hover:shadow-2xl transition-all duration-500 hover:scale-[1.03] bg-gradient-card/80 backdrop-blur-sm border-primary/10"
+                gradientColor="hsl(var(--primary-glow) / 0.15)"
               >
-                <CardContent className="p-6">
-                  <div className={`w-16 h-16 rounded-lg ${feature.gradient} flex items-center justify-center text-white mb-4 group-hover:shadow-glow transition-all`}>
+                <div className="p-6">
+                  <div className={`w-16 h-16 rounded-xl ${feature.gradient} flex items-center justify-center text-white mb-4 group-hover:shadow-glow transition-all duration-300 group-hover:scale-110`}>
                     {feature.icon}
                   </div>
-                  <div className="text-4xl mb-4">{feature.image}</div>
-                  <h4 className="text-xl font-semibold mb-3 text-foreground">{feature.title}</h4>
-                  <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
-                  <Button variant="ghost" className="mt-4 p-0 h-auto text-accent hover:text-accent/80">
+                  <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">{feature.image}</div>
+                  <h4 className="text-xl font-semibold mb-3 text-foreground group-hover:text-primary transition-colors duration-300">{feature.title}</h4>
+                  <p className="text-muted-foreground leading-relaxed mb-4">{feature.description}</p>
+                  <Button variant="ghost" className="mt-2 p-0 h-auto text-accent hover:text-accent/80 group-hover:translate-x-1 transition-all duration-300">
                     Learn more →
                   </Button>
-                </CardContent>
-              </Card>
+                </div>
+              </MagicCard>
             ))}
           </div>
 
