@@ -8,6 +8,9 @@ import { PluginMarketplace } from "@/components/PluginMarketplace";
 import { AdvancedAnalytics } from "@/components/AdvancedAnalytics";
 import { NotificationSystem } from "@/components/NotificationSystem";
 import { SocialFeatures } from "@/components/SocialFeatures";
+import { MobileOptimization } from "@/components/MobileOptimization";
+import { GamificationHub } from "@/components/GamificationHub";
+import { PersonalizationEngine } from "@/components/PersonalizationEngine";
 
 const Index = () => {
   return (
@@ -38,6 +41,18 @@ const Index = () => {
         
         <section id="plugins" className="py-20">
           <PluginMarketplace />
+        </section>
+        
+        <section id="mobile" className="py-20 bg-gradient-subtle">
+          <MobileOptimization />
+        </section>
+        
+        <section id="gamification" className="py-20">
+          <GamificationHub />
+        </section>
+        
+        <section id="personalization" className="py-20 bg-gradient-subtle">
+          <PersonalizationEngine />
         </section>
       </div>
     </div>
