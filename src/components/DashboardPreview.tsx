@@ -5,6 +5,9 @@ import { TrendingUp, TrendingDown, Heart, DollarSign, Target, Zap, ArrowUpRight,
 import { MagicCard } from "@/components/ui/magic-card";
 import { GradientBorder } from "@/components/ui/gradient-border";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
+import { InteractiveCard } from "@/components/ui/interactive-card";
+import { AnimatedBackground } from "@/components/ui/animated-background";
+import dashboardBg from "@/assets/dashboard-bg.jpg";
 
 const healthMetrics = [
   { label: "Sleep Quality", value: 85, trend: "up", color: "text-success" },
@@ -22,8 +25,13 @@ const financeMetrics = [
 
 export const DashboardPreview = () => {
   return (
-    <section className="py-24 bg-gradient-to-b from-secondary/30 to-background">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="dashboard" className="py-24 bg-gradient-to-b from-secondary/50 to-background relative overflow-hidden">
+      <div 
+        className="absolute inset-0 bg-cover bg-center opacity-5"
+        style={{ backgroundImage: `url(${dashboardBg})` }}
+      />
+      <AnimatedBackground variant="grid" />
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
             Your Unified Command Center

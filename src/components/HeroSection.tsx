@@ -1,44 +1,48 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Shield, Brain, Zap } from "lucide-react";
+import { ArrowRight, Shield, Brain, Zap, Play } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
+import heroTech from "@/assets/hero-tech.jpg";
 import { Particles } from "@/components/ui/particles";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 import { MagicCard } from "@/components/ui/magic-card";
+import { AnimatedBackground } from "@/components/ui/animated-background";
+import { FloatingElements } from "@/components/ui/floating-elements";
 
 export const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0 z-0">
-        <img 
-          src={heroImage} 
-          alt="OptiHealth-Wealth Nexus Platform" 
-          className="w-full h-full object-cover opacity-60"
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-background/80 via-background/60 to-background/90" />
-      </div>
-
-      {/* Particles Background */}
-      <Particles 
-        className="absolute inset-0" 
-        quantity={50} 
-        staticity={30} 
-        ease={50} 
+      {/* Multiple background layers for depth */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+        style={{ backgroundImage: `url(${heroTech})` }}
       />
-
+      <AnimatedBackground variant="waves" />
+      <Particles className="absolute inset-0" quantity={80} />
+      <FloatingElements className="absolute inset-0" count={12} />
+      
+      <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/80 to-background/95" />
+      
+      {/* Animated grid overlay */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(var(--primary-glow),0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(var(--primary-glow),0.1)_1px,transparent_1px)] bg-[size:50px_50px] animate-[shimmer_20s_linear_infinite] opacity-30" />
+      
       {/* Hero Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
         <div className="animate-fade-in">
           <div className="mb-8">
-            <AnimatedGradientText>
-              🚀 Launching the Future of Personal Optimization
+            <AnimatedGradientText className="mb-4 animate-[glow_3s_ease-in-out_infinite]">
+              🚀 Next-Gen AI Platform
             </AnimatedGradientText>
           </div>
           
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-hero bg-clip-text text-transparent leading-tight animate-slide-up">
-            OptiHealth-Wealth
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 animate-fade-in">
+            <span className="bg-gradient-primary bg-clip-text text-transparent animate-[gradient_6s_ease-in-out_infinite] bg-[length:200%_auto]">
+              Your AI
+            </span>
             <br />
-            <span className="text-accent animate-pulse">Nexus</span>
+            <span className="text-foreground relative">
+              Companion
+              <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-accent/20 blur-xl animate-[glow_4s_ease-in-out_infinite] -z-10" />
+            </span>
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">

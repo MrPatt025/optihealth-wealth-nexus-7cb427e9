@@ -4,6 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight, Heart, DollarSign, Brain, Users, Shield, Smartphone } from "lucide-react";
 import { MagicCard } from "@/components/ui/magic-card";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
+import { InteractiveCard } from "@/components/ui/interactive-card";
+import { AnimatedBackground } from "@/components/ui/animated-background";
 
 const features = [
   {
@@ -70,8 +72,9 @@ export const FeatureCarousel = () => {
   const visibleFeatures = features.slice(currentIndex * 3, currentIndex * 3 + 3);
 
   return (
-    <section className="py-24 bg-gradient-to-b from-background to-secondary/50">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="py-24 bg-gradient-to-b from-background to-secondary/50 relative overflow-hidden">
+      <AnimatedBackground variant="dots" />
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
             Netflix-Style Experience
@@ -99,23 +102,44 @@ export const FeatureCarousel = () => {
           {/* Feature Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {visibleFeatures.map((feature, index) => (
-              <MagicCard 
+              <InteractiveCard 
                 key={feature.id}
-                className="group hover:shadow-2xl transition-all duration-500 hover:scale-[1.03] bg-gradient-card/80 backdrop-blur-sm border-primary/10"
-                gradientColor="hsl(var(--primary-glow) / 0.15)"
+                className="group hover:shadow-2xl transition-all duration-700 bg-gradient-card/90 backdrop-blur-md border-primary/20 relative overflow-hidden"
+                glowOnHover={true}
+                tiltEffect={true}
+                scaleOnHover={true}
               >
-                <div className="p-6">
-                  <div className={`w-16 h-16 rounded-xl ${feature.gradient} flex items-center justify-center text-white mb-4 group-hover:shadow-glow transition-all duration-300 group-hover:scale-110`}>
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+                
+                <div className="p-6 relative z-10">
+                  <div className={`w-16 h-16 rounded-xl ${feature.gradient} flex items-center justify-center text-white mb-4 group-hover:shadow-glow transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 relative`}>
                     {feature.icon}
+                    <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
-                  <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">{feature.image}</div>
-                  <h4 className="text-xl font-semibold mb-3 text-foreground group-hover:text-primary transition-colors duration-300">{feature.title}</h4>
-                  <p className="text-muted-foreground leading-relaxed mb-4">{feature.description}</p>
-                  <Button variant="ghost" className="mt-2 p-0 h-auto text-accent hover:text-accent/80 group-hover:translate-x-1 transition-all duration-300">
-                    Learn more →
+                  
+                  <div className="text-4xl mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 filter group-hover:brightness-110">
+                    {feature.image}
+                  </div>
+                  
+                  <h4 className="text-xl font-semibold mb-3 text-foreground group-hover:text-primary transition-all duration-300 group-hover:translate-x-1">
+                    {feature.title}
+                  </h4>
+                  
+                  <p className="text-muted-foreground leading-relaxed mb-4 group-hover:text-muted-foreground/90 transition-colors duration-300">
+                    {feature.description}
+                  </p>
+                  
+                  <Button 
+                    variant="ghost" 
+                    className="mt-2 p-0 h-auto text-accent hover:text-accent/80 group-hover:translate-x-2 transition-all duration-500 relative overflow-hidden group/button"
+                  >
+                    <span className="relative z-10">Learn more</span>
+                    <span className="ml-2 inline-block group-hover:translate-x-1 transition-transform duration-300">→</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-accent/10 transform -translate-x-full group/button:translate-x-0 transition-transform duration-300" />
                   </Button>
                 </div>
-              </MagicCard>
+              </InteractiveCard>
             ))}
           </div>
 
