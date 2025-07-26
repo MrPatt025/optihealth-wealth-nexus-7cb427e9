@@ -83,7 +83,10 @@ export default {
 				'gradient-hero': 'var(--gradient-hero)',
 				'gradient-card': 'var(--gradient-card)',
 				'gradient-rainbow': 'var(--gradient-rainbow)',
-				'gradient-mesh': 'var(--gradient-mesh)'
+				'gradient-mesh': 'var(--gradient-mesh)',
+				'gradient-radial': 'var(--gradient-radial)',
+				'gradient-glass': 'var(--gradient-glass)',
+				'gradient-neon': 'var(--gradient-neon)'
 			},
 			boxShadow: {
 				'glow': 'var(--shadow-glow)',
@@ -180,6 +183,31 @@ export default {
 					'50%': {
 						borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%',
 					}
+				},
+				'icon-bounce': {
+					'0%, 20%, 50%, 80%, 100%': {
+						transform: 'translateY(0) rotate(0deg)',
+					},
+					'40%': {
+						transform: 'translateY(-8px) rotate(5deg)',
+					},
+					'60%': {
+						transform: 'translateY(-4px) rotate(-5deg)',
+					}
+				},
+				'icon-wiggle': {
+					'0%, 100%': {
+						transform: 'rotate(-3deg)',
+					},
+					'50%': {
+						transform: 'rotate(3deg)',
+					}
+				},
+				'icon-ping': {
+					'75%, 100%': {
+						transform: 'scale(2)',
+						opacity: '0',
+					}
 				}
 			},
 			animation: {
@@ -192,7 +220,10 @@ export default {
 				'float': 'float 6s ease-in-out infinite',
 				'glow': 'glow 2s ease-in-out infinite',
 				'pulse-glow': 'pulse-glow 3s ease-in-out infinite',
-				'morph': 'morph 8s ease-in-out infinite'
+				'morph': 'morph 8s ease-in-out infinite',
+				'icon-bounce': 'icon-bounce 1s ease-in-out infinite',
+				'icon-wiggle': 'icon-wiggle 1s ease-in-out infinite',
+				'icon-ping': 'icon-ping 1s cubic-bezier(0, 0, 0.2, 1) infinite'
 			}
 		}
 	},

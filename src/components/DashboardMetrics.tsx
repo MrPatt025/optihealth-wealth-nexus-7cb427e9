@@ -2,6 +2,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, TrendingDown, Activity, DollarSign, Heart, Target } from "lucide-react";
 import { useEffect, useState } from "react";
+import { AnimatedIcon } from "@/components/ui/animated-icon";
+import { EnhancedCard } from "@/components/ui/enhanced-card";
 
 interface Metric {
   title: string;
@@ -61,33 +63,50 @@ export const DashboardMetrics = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {metrics.map((metric, index) => (
-        <Card key={index} className="relative overflow-hidden group hover:shadow-lg transition-all duration-300">
+        <EnhancedCard 
+          key={index} 
+          variant="glow" 
+          animation="tilt"
+          glowColor={metric.trend === 'up' ? 'success' : metric.trend === 'down' ? 'warning' : 'primary'}
+          className="relative overflow-hidden group"
+        >
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
               {metric.title}
             </CardTitle>
-            <metric.icon className="h-4 w-4 text-muted-foreground" />
+            <AnimatedIcon
+              icon={metric.icon as any}
+              size="md"
+              variant="pulse"
+              color={metric.trend === 'up' ? 'success' : metric.trend === 'down' ? 'warning' : 'primary'}
+              hover={true}
+            />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{metric.value}</div>
+            <div className="text-2xl font-bold group-hover:text-primary transition-colors duration-300">
+              {metric.value}
+            </div>
             <div className="flex items-center gap-2 mt-2">
-              {metric.trend === 'up' ? (
-                <TrendingUp className="h-3 w-3 text-success" />
-              ) : metric.trend === 'down' ? (
-                <TrendingDown className="h-3 w-3 text-destructive" />
-              ) : null}
+              <AnimatedIcon
+                icon={metric.trend === 'up' ? TrendingUp : TrendingDown}
+                size="sm"
+                variant="bounce"
+                color={metric.trend === 'up' ? 'success' : 'warning'}
+                hover={true}
+              />
               <Badge 
                 variant={metric.trend === 'up' ? 'default' : metric.trend === 'down' ? 'destructive' : 'secondary'}
-                className="text-xs"
+                className="text-xs animate-fade-in group-hover:shadow-md transition-all duration-300"
               >
                 {metric.change > 0 ? '+' : ''}{metric.change.toFixed(1)}%
               </Badge>
             </div>
           </CardContent>
-          <div 
-            className="absolute inset-0 bg-gradient-primary opacity-0 group-hover:opacity-5 transition-opacity duration-300" 
-          />
-        </Card>
+          
+          {/* Enhanced visual effects */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute -inset-1 bg-gradient-primary opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500 -z-10" />
+        </EnhancedCard>
       ))}
     </div>
   );

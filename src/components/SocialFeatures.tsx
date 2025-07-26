@@ -22,6 +22,9 @@ import {
   Medal,
   Star
 } from "lucide-react";
+import { AnimatedIcon } from "@/components/ui/animated-icon";
+import { EnhancedCard } from "@/components/ui/enhanced-card";
+import { IconShowcase } from "@/components/ui/icon-showcase";
 
 interface User {
   id: string;
@@ -213,10 +216,10 @@ export const SocialFeatures = () => {
 
         <TabsContent value="feed" className="space-y-6">
           {/* Post Creation */}
-          <Card>
+          <EnhancedCard variant="glass" animation="hover">
             <CardContent className="p-4">
               <div className="flex gap-3">
-                <Avatar className="h-10 w-10">
+                <Avatar className="h-10 w-10 ring-2 ring-primary/20">
                   <AvatarFallback className="bg-gradient-accent text-background">
                     AC
                   </AvatarFallback>
@@ -224,20 +227,41 @@ export const SocialFeatures = () => {
                 <div className="flex-1">
                   <Input 
                     placeholder="Share your latest achievement or tip..."
-                    className="border-0 bg-muted/30 focus-visible:ring-0"
+                    className="border-0 bg-muted/30 focus-visible:ring-0 focus-visible:bg-muted/50 transition-all duration-300"
                   />
                   <div className="flex items-center justify-between mt-3">
                     <div className="flex gap-2">
-                      <Badge variant="outline" className="text-xs">Health</Badge>
-                      <Badge variant="outline" className="text-xs">Wealth</Badge>
-                      <Badge variant="outline" className="text-xs">Achievement</Badge>
+                      <IconShowcase 
+                        icon={Heart} 
+                        title="Health" 
+                        variant="badge" 
+                        color="success"
+                        animated={true}
+                      />
+                      <IconShowcase 
+                        icon={TrendingUp} 
+                        title="Wealth" 
+                        variant="badge" 
+                        color="warning"
+                        animated={true}
+                      />
+                      <IconShowcase 
+                        icon={Trophy} 
+                        title="Achievement" 
+                        variant="badge" 
+                        color="accent"
+                        animated={true}
+                      />
                     </div>
-                    <Button size="sm" variant="premium">Share</Button>
+                    <Button size="sm" variant="premium" className="group">
+                      <Share2 className="h-4 w-4 mr-2 group-hover:rotate-12 transition-transform duration-300" />
+                      Share
+                    </Button>
                   </div>
                 </div>
               </div>
             </CardContent>
-          </Card>
+          </EnhancedCard>
 
           {/* Posts Feed */}
           <div className="space-y-4">

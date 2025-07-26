@@ -6,6 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Search, Star, Download, TrendingUp, Heart, Shield, Zap, Users } from "lucide-react";
+import { AnimatedIcon } from "@/components/ui/animated-icon";
+import { EnhancedCard } from "@/components/ui/enhanced-card";
+import { IconShowcase } from "@/components/ui/icon-showcase";
 
 interface Plugin {
   id: string;
@@ -106,57 +109,87 @@ export const PluginMarketplace = () => {
   const allPlugins = filteredPlugins;
 
   const PluginCard = ({ plugin }: { plugin: Plugin }) => (
-    <Card className="relative overflow-hidden group hover:shadow-lg transition-all duration-300">
+    <EnhancedCard 
+      variant={plugin.featured ? "neon" : "glass"} 
+      animation="tilt"
+      glowColor={plugin.category === 'Health' ? 'success' : plugin.category === 'Finance' ? 'warning' : 'primary'}
+      className="relative overflow-hidden group"
+    >
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-lg bg-gradient-primary/10 flex items-center justify-center">
-              <plugin.icon className="h-6 w-6 text-primary" />
-            </div>
-            <div>
-              <CardTitle className="text-lg">{plugin.name}</CardTitle>
-              <CardDescription className="text-sm">{plugin.developer}</CardDescription>
-            </div>
-          </div>
-          <Badge variant={plugin.price === "Free" ? "secondary" : "outline"}>
+          <IconShowcase
+            icon={plugin.icon as any}
+            title={plugin.name}
+            description={plugin.developer}
+            variant="card"
+            color={plugin.category === 'Health' ? 'success' : plugin.category === 'Finance' ? 'warning' : 'primary'}
+            animated={true}
+            gradient={plugin.featured}
+            className="flex-1"
+          />
+          <Badge 
+            variant={plugin.price === "Free" ? "secondary" : "outline"}
+            className="animate-fade-in group-hover:scale-110 transition-transform duration-300"
+          >
             {plugin.price}
           </Badge>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-sm text-muted-foreground line-clamp-2">
+        <p className="text-sm text-muted-foreground line-clamp-2 group-hover:text-muted-foreground/80 transition-colors duration-300">
           {plugin.description}
         </p>
         
         <div className="flex items-center gap-4 text-sm text-muted-foreground">
-          <div className="flex items-center gap-1">
-            <Star className="h-4 w-4 fill-current text-yellow-500" />
+          <div className="flex items-center gap-1 group-hover:text-warning transition-colors duration-300">
+            <AnimatedIcon icon={Star} size="sm" variant="pulse" color="warning" />
             {plugin.rating}
           </div>
-          <div className="flex items-center gap-1">
-            <Download className="h-4 w-4" />
+          <div className="flex items-center gap-1 group-hover:text-primary transition-colors duration-300">
+            <AnimatedIcon icon={Download} size="sm" variant="bounce" color="primary" />
             {plugin.downloads}
           </div>
-          <Badge variant="outline" className="text-xs">
+          <Badge 
+            variant="outline" 
+            className="text-xs group-hover:border-primary/50 transition-colors duration-300"
+          >
             {plugin.category}
           </Badge>
         </div>
 
         <Button 
-          className="w-full" 
+          className="w-full group/button relative overflow-hidden" 
           variant={plugin.installed ? "secondary" : "premium"}
           disabled={plugin.installed}
         >
-          {plugin.installed ? "Installed" : "Install Plugin"}
+          <span className="relative z-10 flex items-center">
+            {plugin.installed ? (
+              <>
+                <AnimatedIcon icon={Download} size="sm" variant="pulse" className="mr-2" />
+                Installed
+              </>
+            ) : (
+              <>
+                <AnimatedIcon icon={Download} size="sm" variant="bounce" className="mr-2 group-hover/button:animate-bounce" />
+                Install Plugin
+              </>
+            )}
+          </span>
+          {!plugin.installed && (
+            <div className="absolute inset-0 bg-gradient-primary opacity-0 group-hover/button:opacity-20 transition-opacity duration-300" />
+          )}
         </Button>
       </CardContent>
       
       {plugin.featured && (
         <div className="absolute top-2 right-2">
-          <Badge variant="default" className="text-xs">Featured</Badge>
+          <Badge variant="default" className="text-xs animate-pulse-glow">
+            <AnimatedIcon icon={Star} size="sm" variant="glow" className="mr-1" />
+            Featured
+          </Badge>
         </div>
       )}
-    </Card>
+    </EnhancedCard>
   );
 
   return (
