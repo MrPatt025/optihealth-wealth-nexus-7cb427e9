@@ -147,10 +147,6 @@ All colors MUST be HSL.
     font-feature-settings: 'cv11', 'ss01';
   }
   
-  .font-mono {
-    @apply font-mono;
-    font-feature-settings: 'liga', 'calt';
-  }
   
   /* Performance optimizations */
   * {
