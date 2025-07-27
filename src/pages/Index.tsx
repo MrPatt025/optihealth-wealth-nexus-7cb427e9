@@ -11,11 +11,16 @@ import { SocialFeatures } from "@/components/SocialFeatures";
 import { MobileOptimization } from "@/components/MobileOptimization";
 import { GamificationHub } from "@/components/GamificationHub";
 import { PersonalizationEngine } from "@/components/PersonalizationEngine";
+import { SmoothScroll } from "@/components/ui/smooth-scroll";
+import { usePerformance } from "@/hooks/usePerformance";
 
 const Index = () => {
+  usePerformance();
+  
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
+    <SmoothScroll>
+      <div className="min-h-screen bg-background font-lexend antialiased">
+        <Navigation />
       
       <div className="pt-16">
         <HeroSection />
@@ -54,8 +59,9 @@ const Index = () => {
         <section id="personalization" className="py-20 bg-gradient-subtle">
           <PersonalizationEngine />
         </section>
+        </div>
       </div>
-    </div>
+    </SmoothScroll>
   );
 };
 

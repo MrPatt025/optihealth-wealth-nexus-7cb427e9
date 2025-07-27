@@ -34,20 +34,20 @@ export const HeroSection = () => {
             </AnimatedGradientText>
           </div>
           
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 animate-fade-in">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-lexend font-black mb-8 animate-fade-in tracking-tighter leading-[0.9]">
             <span className="bg-gradient-primary bg-clip-text text-transparent animate-[gradient_6s_ease-in-out_infinite] bg-[length:200%_auto]">
               Your AI
             </span>
             <br />
-            <span className="text-foreground relative">
+            <span className="text-foreground relative font-lexend">
               Companion
               <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-accent/20 blur-xl animate-[glow_4s_ease-in-out_infinite] -z-10" />
             </span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed font-inter font-light tracking-wide">
             The world's first Gen-Z-centric AI platform that seamlessly blends 
-            <span className="text-accent font-semibold"> health optimization</span> and 
+            <span className="text-accent font-semibold font-lexend"> health optimization</span> and
             <span className="text-primary-glow font-semibold"> financial intelligence</span> 
             with Netflix-style UX and ironclad privacy.
           </p>

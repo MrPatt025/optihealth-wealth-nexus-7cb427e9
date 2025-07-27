@@ -136,7 +136,34 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground font-lexend antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+    font-variation-settings: 'slnt' 0;
+  }
+  
+  /* Professional Typography */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-lexend font-semibold tracking-tight;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  
+  .font-mono {
+    @apply font-mono;
+    font-feature-settings: 'liga', 'calt';
+  }
+  
+  /* Performance optimizations */
+  * {
+    scroll-behavior: smooth;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
@@ -171,5 +198,45 @@ All colors MUST be HSL.
       linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px),
       linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px);
     background-size: 50px 50px;
+  }
+  
+  /* UX Enhancements */
+  .focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+  }
+  
+  .loading-shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+  
+  /* Performance Critical Animations */
+  .will-change-transform {
+    will-change: transform;
+  }
+  
+  .will-change-opacity {
+    will-change: opacity;
+  }
+  
+  /* Professional Button States */
+  .button-professional {
+    @apply transition-all duration-200 ease-out;
+    transform: translateY(0px);
+  }
+  
+  .button-professional:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .button-professional:active {
+    transform: translateY(0px);
   }
 }
