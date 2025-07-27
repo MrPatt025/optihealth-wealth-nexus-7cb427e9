@@ -5,7 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Search, Star, Download, TrendingUp, Heart, Shield, Zap, Users } from "lucide-react";
+import { Search, Star, Download, TrendingUp, Heart, Shield, Zap, Users, Settings, Trash2, Check } from "lucide-react";
+import { usePlugins, PluginMetadata } from "@/contexts/PluginContext";
+import { PluginSettings } from "@/components/PluginSettings";
+import { useToast } from "@/hooks/use-toast";
 import { AnimatedIcon } from "@/components/ui/animated-icon";
 import { EnhancedCard } from "@/components/ui/enhanced-card";
 import { IconShowcase } from "@/components/ui/icon-showcase";
@@ -23,6 +26,106 @@ interface Plugin {
   installed: boolean;
   featured: boolean;
 }
+
+// Convert mock plugins to PluginMetadata format
+const marketplacePlugins: PluginMetadata[] = [
+  {
+    id: "analytics-widget",
+    name: "Analytics Widget",
+    version: "1.2.0",
+    author: "OptiHealth Team",
+    description: "Real-time analytics dashboard with performance metrics and user insights.",
+    icon: "📊",
+    category: "Analytics",
+    permissions: ["dashboard", "analytics"],
+    enabled: false,
+    installed: false,
+    featured: true,
+    settingsSchema: {
+      type: "object",
+      properties: {
+        showMetrics: { type: "boolean", title: "Show Metrics", default: true },
+        refreshInterval: { type: "number", title: "Refresh Interval (ms)", default: 30000, minimum: 5000, maximum: 300000 },
+        theme: {
+          type: "object",
+          title: "Theme Settings",
+          properties: {
+            primary: { type: "string", title: "Primary Color", default: "#3b82f6" },
+            secondary: { type: "string", title: "Secondary Color", default: "#64748b" }
+          }
+        }
+      }
+    }
+  },
+  {
+    id: "health-tracker",
+    name: "Health Tracker",
+    version: "2.1.0", 
+    author: "WellnessTech",
+    description: "Comprehensive health monitoring with daily goals and progress tracking.",
+    icon: "❤️",
+    category: "Health",
+    permissions: ["health-data", "notifications"],
+    enabled: false,
+    installed: false,
+    featured: true,
+    settingsSchema: {
+      type: "object",
+      properties: {
+        trackSteps: { type: "boolean", title: "Track Steps", default: true },
+        trackHeartRate: { type: "boolean", title: "Track Heart Rate", default: true },
+        dailyGoals: {
+          type: "object",
+          title: "Daily Goals",
+          properties: {
+            steps: { type: "number", title: "Steps Goal", default: 10000 },
+            calories: { type: "number", title: "Calories Goal", default: 2000 },
+            water: { type: "number", title: "Water Glasses Goal", default: 8 }
+          }
+        }
+      }
+    }
+  },
+  {
+    id: "wealth-dashboard",
+    name: "Wealth Dashboard",
+    version: "1.8.2",
+    author: "FinTech Solutions",
+    description: "Portfolio tracking and financial insights with real-time market data.",
+    icon: "💰",
+    category: "Finance",
+    permissions: ["financial-data", "external-apis"],
+    enabled: false,
+    installed: false,
+    featured: false
+  },
+  {
+    id: "security-monitor",
+    name: "Security Monitor",
+    version: "3.0.1",
+    author: "CyberSafe Labs",
+    description: "Advanced security monitoring with threat detection and compliance tracking.",
+    icon: "🛡️",
+    category: "Security",
+    permissions: ["security-logs", "system-monitoring"],
+    enabled: false,
+    installed: false,
+    featured: true
+  },
+  {
+    id: "ml-insights",
+    name: "ML Insights",
+    version: "1.5.0",
+    author: "AI Dynamics",
+    description: "Machine learning insights with model performance tracking and predictions.",
+    icon: "🧠",
+    category: "AI/ML",
+    permissions: ["ml-models", "data-analysis"],
+    enabled: false,
+    installed: false,
+    featured: false
+  }
+];
 
 const plugins: Plugin[] = [
   {
@@ -95,10 +198,12 @@ const plugins: Plugin[] = [
 export const PluginMarketplace = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const { installPlugin, uninstallPlugin, enablePlugin, disablePlugin, installedPlugins } = usePlugins();
+  const { toast } = useToast();
 
   const categories = ["all", "Finance", "Health", "Security"];
   
-  const filteredPlugins = plugins.filter(plugin => {
+  const filteredPlugins = marketplacePlugins.filter(plugin => {
     const matchesSearch = plugin.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          plugin.description.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory === "all" || plugin.category === selectedCategory;
@@ -108,7 +213,7 @@ export const PluginMarketplace = () => {
   const featuredPlugins = filteredPlugins.filter(p => p.featured);
   const allPlugins = filteredPlugins;
 
-  const PluginCard = ({ plugin }: { plugin: Plugin }) => (
+  const PluginCard = ({ plugin }: { plugin: PluginMetadata }) => (
     <EnhancedCard 
       variant={plugin.featured ? "neon" : "glass"} 
       animation="tilt"
@@ -157,28 +262,47 @@ export const PluginMarketplace = () => {
           </Badge>
         </div>
 
-        <Button 
-          className="w-full group/button relative overflow-hidden" 
-          variant={plugin.installed ? "secondary" : "premium"}
-          disabled={plugin.installed}
-        >
-          <span className="relative z-10 flex items-center">
-            {plugin.installed ? (
-              <>
-                <AnimatedIcon icon={Download} size="sm" variant="pulse" className="mr-2" />
-                Installed
-              </>
-            ) : (
-              <>
-                <AnimatedIcon icon={Download} size="sm" variant="bounce" className="mr-2 group-hover/button:animate-bounce" />
-                Install Plugin
-              </>
-            )}
-          </span>
-          {!plugin.installed && (
-            <div className="absolute inset-0 bg-gradient-primary opacity-0 group-hover/button:opacity-20 transition-opacity duration-300" />
+        <div className="flex gap-2">
+          <Button 
+            className="flex-1 group/button relative overflow-hidden" 
+            variant={plugin.installed ? "secondary" : "premium"}
+            onClick={() => {
+              if (!plugin.installed) {
+                installPlugin(plugin);
+                toast({
+                  title: "Plugin Installed",
+                  description: `${plugin.name} has been installed successfully.`,
+                });
+              }
+            }}
+            disabled={plugin.installed}
+          >
+            <span className="relative z-10 flex items-center">
+              {plugin.installed ? (
+                <>
+                  <Check className="h-4 w-4 mr-2" />
+                  Installed
+                </>
+              ) : (
+                <>
+                  <Download className="h-4 w-4 mr-2" />
+                  Install
+                </>
+              )}
+            </span>
+          </Button>
+          
+          {plugin.installed && (
+            <PluginSettings 
+              plugin={plugin}
+              trigger={
+                <Button variant="outline" size="default">
+                  <Settings className="h-4 w-4" />
+                </Button>
+              }
+            />
           )}
-        </Button>
+        </div>
       </CardContent>
       
       {plugin.featured && (
