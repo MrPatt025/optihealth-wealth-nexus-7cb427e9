@@ -4,7 +4,7 @@ import { LucideIcon } from 'lucide-react';
 import { AnimatedIcon } from './animated-icon';
 
 interface IconShowcaseProps {
-  icon: LucideIcon;
+  icon: LucideIcon | string;
   title: string;
   description?: string;
   className?: string;
@@ -68,14 +68,18 @@ export function IconShowcase({
   return (
     <div className={cn(config.container, className)} {...props}>
       <div className={config.iconWrapper}>
-        <AnimatedIcon
-          icon={icon}
-          size={config.iconSize}
-          variant={animated ? 'glow' : 'default'}
-          color={color}
-          gradient={gradient}
-          className="text-white"
-        />
+        {typeof icon === 'string' ? (
+          <span className="text-2xl">{icon}</span>
+        ) : (
+          <AnimatedIcon
+            icon={icon}
+            size={config.iconSize}
+            variant={animated ? 'glow' : 'default'}
+            color={color}
+            gradient={gradient}
+            className="text-white"
+          />
+        )}
       </div>
       
       {variant === 'badge' ? (
