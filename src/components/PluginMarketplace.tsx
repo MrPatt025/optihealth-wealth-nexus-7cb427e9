@@ -225,7 +225,7 @@ export const PluginMarketplace = () => {
           <IconShowcase
             icon={plugin.icon as any}
             title={plugin.name}
-            description={plugin.developer}
+            description={plugin.author}
             variant="card"
             color={plugin.category === 'Health' ? 'success' : plugin.category === 'Finance' ? 'warning' : 'primary'}
             animated={true}
