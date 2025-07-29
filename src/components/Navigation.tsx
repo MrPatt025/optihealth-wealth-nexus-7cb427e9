@@ -2,16 +2,18 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AuthModal } from "./AuthModal";
-import { Menu, X, Bell, Settings, User, Home, BarChart3, MessageCircle, Puzzle, Users } from "lucide-react";
+import { Menu, X, Bell, Settings, User, Home, BarChart3, MessageCircle, Puzzle, Users, Palette } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 const navigationItems = [
-  { icon: Home, label: "Dashboard", href: "#", active: true },
+  { icon: Home, label: "Dashboard", href: "/", active: true, isInternal: true },
   { icon: BarChart3, label: "Analytics", href: "#analytics" },
   { icon: MessageCircle, label: "AI Coach", href: "#chat" },
   { icon: Bell, label: "Notifications", href: "#notifications" },
   { icon: Users, label: "Community", href: "#community" },
   { icon: Puzzle, label: "Plugins", href: "#plugins", badge: "Beta" },
+  { icon: Palette, label: "Design System", href: "/design-system", badge: "New", isInternal: true },
 ];
 
 export const Navigation = () => {
@@ -34,25 +36,51 @@ export const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1">
-            {navigationItems.map((item, index) => (
-              <Button
-                key={index}
-                variant={item.active ? "secondary" : "ghost"}
-                size="sm"
-                className={cn(
-                  "flex items-center gap-2",
-                  item.active && "bg-primary/10 text-primary"
-                )}
-              >
-                <item.icon className="h-4 w-4" />
-                {item.label}
-                {item.badge && (
-                  <Badge variant="secondary" className="text-xs ml-1">
-                    {item.badge}
-                  </Badge>
-                )}
-              </Button>
-            ))}
+            {navigationItems.map((item, index) => {
+              if (item.isInternal) {
+                return (
+                  <Link key={index} to={item.href}>
+                    <Button
+                      variant={item.active ? "secondary" : "ghost"}
+                      size="sm"
+                      className={cn(
+                        "flex items-center gap-2",
+                        item.active && "bg-primary/10 text-primary"
+                      )}
+                    >
+                      <item.icon className="h-4 w-4" />
+                      {item.label}
+                      {item.badge && (
+                        <Badge variant="secondary" className="text-xs ml-1">
+                          {item.badge}
+                        </Badge>
+                      )}
+                    </Button>
+                  </Link>
+                );
+              }
+              
+              return (
+                <a key={index} href={item.href}>
+                  <Button
+                    variant={item.active ? "secondary" : "ghost"}
+                    size="sm"
+                    className={cn(
+                      "flex items-center gap-2",
+                      item.active && "bg-primary/10 text-primary"
+                    )}
+                  >
+                    <item.icon className="h-4 w-4" />
+                    {item.label}
+                    {item.badge && (
+                      <Badge variant="secondary" className="text-xs ml-1">
+                        {item.badge}
+                      </Badge>
+                    )}
+                  </Button>
+                </a>
+              );
+            })}
           </div>
 
           {/* User Actions */}
@@ -99,25 +127,51 @@ export const Navigation = () => {
         {isMenuOpen && (
           <div className="md:hidden border-t border-border/20 bg-background/95 backdrop-blur-sm">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              {navigationItems.map((item, index) => (
-                <Button
-                  key={index}
-                  variant={item.active ? "secondary" : "ghost"}
-                  size="sm"
-                  className={cn(
-                    "w-full justify-start gap-2",
-                    item.active && "bg-primary/10 text-primary"
-                  )}
-                >
-                  <item.icon className="h-4 w-4" />
-                  {item.label}
-                  {item.badge && (
-                    <Badge variant="secondary" className="text-xs ml-auto">
-                      {item.badge}
-                    </Badge>
-                  )}
-                </Button>
-              ))}
+              {navigationItems.map((item, index) => {
+                if (item.isInternal) {
+                  return (
+                    <Link key={index} to={item.href}>
+                      <Button
+                        variant={item.active ? "secondary" : "ghost"}
+                        size="sm"
+                        className={cn(
+                          "w-full justify-start gap-2",
+                          item.active && "bg-primary/10 text-primary"
+                        )}
+                      >
+                        <item.icon className="h-4 w-4" />
+                        {item.label}
+                        {item.badge && (
+                          <Badge variant="secondary" className="text-xs ml-auto">
+                            {item.badge}
+                          </Badge>
+                        )}
+                      </Button>
+                    </Link>
+                  );
+                }
+                
+                return (
+                  <a key={index} href={item.href}>
+                    <Button
+                      variant={item.active ? "secondary" : "ghost"}
+                      size="sm"
+                      className={cn(
+                        "w-full justify-start gap-2",
+                        item.active && "bg-primary/10 text-primary"
+                      )}
+                    >
+                      <item.icon className="h-4 w-4" />
+                      {item.label}
+                      {item.badge && (
+                        <Badge variant="secondary" className="text-xs ml-auto">
+                          {item.badge}
+                        </Badge>
+                      )}
+                    </Button>
+                  </a>
+                );
+              })}
             </div>
           </div>
         )}

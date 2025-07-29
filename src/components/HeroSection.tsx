@@ -11,19 +11,26 @@ import { FloatingElements } from "@/components/ui/floating-elements";
 export const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Multiple background layers for depth */}
+      {/* Enhanced background layers with MagicUI + Lightswind fusion */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"
         style={{ backgroundImage: `url(${heroTech})` }}
       />
       <AnimatedBackground variant="waves" />
-      <Particles className="absolute inset-0" quantity={80} />
-      <FloatingElements className="absolute inset-0" count={12} />
+      <Particles className="absolute inset-0" quantity={120} />
+      <FloatingElements className="absolute inset-0" count={16} />
       
-      <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/80 to-background/95" />
+      {/* Aurora background effect */}
+      <div className="absolute inset-0 bg-gradient-mesh opacity-40" />
+      <div className="absolute inset-0 bg-gradient-to-br from-background/90 via-background/75 to-background/90" />
       
-      {/* Animated grid overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(var(--primary-glow),0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(var(--primary-glow),0.1)_1px,transparent_1px)] bg-[size:50px_50px] animate-[shimmer_20s_linear_infinite] opacity-30" />
+      {/* Enhanced animated grid with MagicUI shimmer */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(var(--primary-glow),0.15)_1px,transparent_1px),linear-gradient(90deg,rgba(var(--primary-glow),0.15)_1px,transparent_1px)] bg-[size:60px_60px] animate-[shimmer_25s_linear_infinite] opacity-25" />
+      
+      {/* Additional aurora glow layers */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-glow/20 rounded-full blur-3xl animate-pulse" />
+      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/20 rounded-full blur-3xl animate-pulse delay-1000" />
+      <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-success/15 rounded-full blur-3xl animate-float" />
       
       {/* Hero Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
@@ -52,41 +59,62 @@ export const HeroSection = () => {
             with Netflix-style UX and ironclad privacy.
           </p>
 
-          {/* Feature Highlights */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            <MagicCard className="p-4 bg-gradient-card/50 backdrop-blur-sm border-primary/20">
-              <div className="flex items-center gap-2 text-foreground/90">
-                <Brain className="h-5 w-5 text-accent animate-pulse" />
-                <span className="font-medium">AI-Powered Insights</span>
+          {/* Enhanced Feature Highlights with MagicCard */}
+          <div className="flex flex-wrap justify-center gap-6 mb-12">
+            <MagicCard 
+              className="p-6 bg-gradient-glass backdrop-blur-md border-primary/30 hover:border-primary/50 transition-all duration-500 hover:scale-105 hover:shadow-glow"
+              gradientColor="rgba(var(--primary-glow), 0.15)"
+            >
+              <div className="flex items-center gap-3 text-foreground">
+                <Brain className="h-6 w-6 text-accent animate-pulse" />
+                <span className="font-semibold font-lexend">AI-Powered Insights</span>
               </div>
             </MagicCard>
-            <MagicCard className="p-4 bg-gradient-card/50 backdrop-blur-sm border-primary/20">
-              <div className="flex items-center gap-2 text-foreground/90">
-                <Shield className="h-5 w-5 text-primary-glow animate-pulse" />
-                <span className="font-medium">Privacy-First</span>
+            
+            <MagicCard 
+              className="p-6 bg-gradient-glass backdrop-blur-md border-success/30 hover:border-success/50 transition-all duration-500 hover:scale-105 hover:shadow-glow"
+              gradientColor="rgba(var(--success), 0.15)"
+            >
+              <div className="flex items-center gap-3 text-foreground">
+                <Shield className="h-6 w-6 text-primary-glow animate-pulse" />
+                <span className="font-semibold font-lexend">Privacy-First</span>
               </div>
             </MagicCard>
-            <MagicCard className="p-4 bg-gradient-card/50 backdrop-blur-sm border-primary/20">
-              <div className="flex items-center gap-2 text-foreground/90">
-                <Zap className="h-5 w-5 text-warning animate-pulse" />
-                <span className="font-medium">Real-Time Optimization</span>
+            
+            <MagicCard 
+              className="p-6 bg-gradient-glass backdrop-blur-md border-warning/30 hover:border-warning/50 transition-all duration-500 hover:scale-105 hover:shadow-glow"
+              gradientColor="rgba(var(--warning), 0.15)"
+            >
+              <div className="flex items-center gap-3 text-foreground">
+                <Zap className="h-6 w-6 text-warning animate-pulse" />
+                <span className="font-semibold font-lexend">Real-Time Optimization</span>
               </div>
             </MagicCard>
           </div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button variant="hero" size="lg" className="group relative overflow-hidden shadow-glow hover:shadow-lg transition-all duration-300">
-              <span className="relative z-10 flex items-center">
+          {/* Enhanced CTA Buttons with MagicUI effects */}
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <Button 
+              size="lg" 
+              className="group relative overflow-hidden bg-gradient-primary hover:bg-gradient-hero shadow-glow hover:shadow-lg hover:scale-105 transition-all duration-500 px-8 py-4 text-lg font-semibold border-0"
+            >
+              <span className="relative z-10 flex items-center text-white">
                 Start Your Journey
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
+                <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-2 transition-transform duration-500" />
               </span>
-              <div className="absolute inset-0 bg-gradient-primary opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-gradient-accent opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
+              <div className="absolute inset-0 animate-shimmer opacity-20" />
             </Button>
-            <Button variant="outline" size="lg" className="group border-primary/50 hover:border-primary transition-all duration-300">
+            
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="group border-2 border-primary/40 hover:border-primary bg-gradient-glass backdrop-blur-md hover:bg-gradient-primary/10 transition-all duration-500 px-8 py-4 text-lg font-semibold hover:scale-105 hover:shadow-glow"
+            >
               <span className="flex items-center">
+                <Play className="mr-3 h-5 w-5 group-hover:animate-bounce" />
                 Watch Demo
-                <div className="ml-2 w-2 h-2 bg-primary rounded-full animate-pulse" />
+                <div className="ml-3 w-3 h-3 bg-primary rounded-full animate-pulse" />
               </span>
             </Button>
           </div>
