@@ -6,6 +6,10 @@ import { Send, Mic, MicOff, Brain, Sparkles, Loader2 } from "lucide-react";
 import { ChatMessage } from "./ChatMessage";
 import { useChat } from "@/hooks/useChat";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { SplitText } from "@/components/ui/split-text";
+import { FadeInText } from "@/components/ui/fade-in-text";
+import { Typewriter } from "@/components/ui/typewriter";
+import { MagicCard } from "@/components/ui/magic-card";
 
 const mockConversations = [
   {
@@ -66,19 +70,28 @@ export const ConversationalInterface = () => {
   return (
     <section className="py-24 bg-secondary/30">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-accent bg-clip-text text-transparent">
-            Chat with Your AI Health & Wealth Coach
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Natural conversations that understand context, remember your goals, and provide actionable insights 
-            with explainable AI reasoning.
-          </p>
-        </div>
+        <FadeInText direction="up" duration={1} className="text-center mb-16">
+          <SplitText
+            text="Chat with Your AI Health & Wealth Coach"
+            className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-accent bg-clip-text text-transparent block"
+            delay={60}
+            duration={0.8}
+            from={{ opacity: 0, y: 40, scale: 0.9 }}
+            to={{ opacity: 1, y: 0, scale: 1 }}
+          />
+          <FadeInText direction="up" delay={2} duration={1}>
+            <Typewriter
+              text="Natural conversations that understand context, remember your goals, and provide actionable insights with explainable AI reasoning."
+              className="text-xl text-muted-foreground max-w-3xl mx-auto"
+              speed={20}
+              delay={3000}
+            />
+          </FadeInText>
+        </FadeInText>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <FadeInText direction="up" delay={4.5} duration={1.5} className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Chat Interface */}
-          <Card className="bg-gradient-card border-border/50 shadow-card">
+          <MagicCard className="bg-gradient-card border-border/50 shadow-card hover:shadow-glow transition-all duration-500">
             <CardContent className="p-6">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center">
@@ -148,10 +161,10 @@ export const ConversationalInterface = () => {
                 </Button>
               </div>
             </CardContent>
-          </Card>
+          </MagicCard>
 
           {/* Features List */}
-          <div className="space-y-6">
+          <FadeInText direction="left" delay={5.5} duration={1} className="space-y-6">
             <h3 className="text-2xl font-bold text-foreground">AI Capabilities</h3>
             
             {[
@@ -176,7 +189,7 @@ export const ConversationalInterface = () => {
                 description: "Text, charts, and interactive visualizations in a single conversation flow."
               }
             ].map((feature, index) => (
-              <Card key={index} className="bg-gradient-card border-border/50 hover:shadow-card transition-all">
+              <MagicCard key={index} className="bg-gradient-card border-border/50 hover:shadow-card transition-all hover:scale-[1.02] duration-300">
                 <CardContent className="p-4">
                   <div className="flex items-start gap-3">
                     <div className="mt-1">{feature.icon}</div>
@@ -186,10 +199,10 @@ export const ConversationalInterface = () => {
                     </div>
                   </div>
                 </CardContent>
-              </Card>
+              </MagicCard>
             ))}
-          </div>
-        </div>
+          </FadeInText>
+        </FadeInText>
       </div>
     </section>
   );

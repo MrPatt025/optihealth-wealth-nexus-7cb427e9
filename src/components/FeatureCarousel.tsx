@@ -6,6 +6,9 @@ import { MagicCard } from "@/components/ui/magic-card";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import { InteractiveCard } from "@/components/ui/interactive-card";
 import { AnimatedBackground } from "@/components/ui/animated-background";
+import { SplitText } from "@/components/ui/split-text";
+import { FadeInText } from "@/components/ui/fade-in-text";
+import { Typewriter } from "@/components/ui/typewriter";
 
 const features = [
   {
@@ -75,18 +78,27 @@ export const FeatureCarousel = () => {
     <section className="py-24 bg-gradient-to-b from-background to-secondary/50 relative overflow-hidden">
       <AnimatedBackground variant="dots" />
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
-            Netflix-Style Experience
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Swipe through personalized insights, binge-worthy content, and AI-powered recommendations 
-            that evolve with your journey.
-          </p>
-        </div>
+        <FadeInText direction="up" duration={1} className="text-center mb-16">
+          <SplitText
+            text="Netflix-Style Experience"
+            className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent block"
+            delay={40}
+            duration={0.8}
+            from={{ opacity: 0, y: 60, rotateX: -30 }}
+            to={{ opacity: 1, y: 0, rotateX: 0 }}
+          />
+          <FadeInText direction="up" delay={1.2} duration={1}>
+            <Typewriter
+              text="Swipe through personalized insights, binge-worthy content, and AI-powered recommendations that evolve with your journey."
+              className="text-xl text-muted-foreground max-w-3xl mx-auto"
+              speed={25}
+              delay={1500}
+            />
+          </FadeInText>
+        </FadeInText>
 
         {/* Carousel Container */}
-        <div className="relative">
+        <FadeInText direction="up" delay={2.5} duration={1.5} className="relative">
           <div className="flex items-center justify-between mb-8">
             <h3 className="text-2xl font-semibold">Featured Capabilities</h3>
             <div className="flex gap-2">
@@ -155,7 +167,7 @@ export const FeatureCarousel = () => {
               />
             ))}
           </div>
-        </div>
+        </FadeInText>
       </div>
     </section>
   );

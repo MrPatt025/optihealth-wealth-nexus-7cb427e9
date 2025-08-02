@@ -7,6 +7,9 @@ import { GradientBorder } from "@/components/ui/gradient-border";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import { InteractiveCard } from "@/components/ui/interactive-card";
 import { AnimatedBackground } from "@/components/ui/animated-background";
+import { SplitText } from "@/components/ui/split-text";
+import { FadeInText } from "@/components/ui/fade-in-text";
+import { Typewriter } from "@/components/ui/typewriter";
 import dashboardBg from "@/assets/dashboard-bg.jpg";
 
 const healthMetrics = [
@@ -32,17 +35,26 @@ export const DashboardPreview = () => {
       />
       <AnimatedBackground variant="grid" />
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
-            Your Unified Command Center
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Instagram-style feeds meet TikTok engagement with powerful analytics. 
-            See how your health and wealth interconnect in real-time.
-          </p>
-        </div>
+        <FadeInText direction="up" duration={1} className="text-center mb-16">
+          <SplitText
+            text="Your Unified Command Center"
+            className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent block"
+            delay={50}
+            duration={0.8}
+            from={{ opacity: 0, y: 50 }}
+            to={{ opacity: 1, y: 0 }}
+          />
+          <FadeInText direction="up" delay={1.5} duration={1}>
+            <Typewriter
+              text="Instagram-style feeds meet TikTok engagement with powerful analytics. See how your health and wealth interconnect in real-time."
+              className="text-xl text-muted-foreground max-w-3xl mx-auto"
+              speed={30}
+              delay={2000}
+            />
+          </FadeInText>
+        </FadeInText>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <FadeInText direction="up" delay={3} duration={1.2} className="grid lg:grid-cols-3 gap-8">
           {/* Health Dashboard */}
           <MagicCard className="lg:col-span-1 bg-gradient-card/80 backdrop-blur-sm border-primary/20 hover-glow">
             <CardHeader className="pb-3">
@@ -188,13 +200,13 @@ export const DashboardPreview = () => {
               </GradientBorder>
             </CardContent>
           </MagicCard>
-        </div>
+        </FadeInText>
 
-        <div className="text-center mt-16">
+        <FadeInText direction="up" delay={4.5} duration={1} className="text-center mt-16">
           <Button variant="hero" size="lg">
             Explore Full Dashboard
           </Button>
-        </div>
+        </FadeInText>
       </div>
     </section>
   );

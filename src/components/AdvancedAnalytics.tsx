@@ -6,6 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Calendar, TrendingUp, TrendingDown, Target, DollarSign, Heart, Activity, Download, Share2, Filter } from "lucide-react";
+import { SplitText } from "@/components/ui/split-text";
+import { FadeInText } from "@/components/ui/fade-in-text";
+import { Typewriter } from "@/components/ui/typewriter";
+import { MagicCard } from "@/components/ui/magic-card";
 
 const healthData = [
   { date: '2024-01', steps: 8200, sleep: 7.2, stress: 3.1, weight: 70 },
@@ -68,17 +72,27 @@ export const AdvancedAnalytics = () => {
   return (
     <div className="max-w-7xl mx-auto p-6 space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <FadeInText direction="up" duration={1} className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-            Advanced Analytics
-          </h1>
-          <p className="text-muted-foreground mt-1">
-            Deep insights into your health and wealth optimization journey
-          </p>
+          <SplitText
+            text="Advanced Analytics"
+            className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent block"
+            delay={50}
+            duration={0.8}
+            from={{ opacity: 0, y: 30 }}
+            to={{ opacity: 1, y: 0 }}
+          />
+          <FadeInText direction="up" delay={1.5} duration={1}>
+            <Typewriter
+              text="Deep insights into your health and wealth optimization journey"
+              className="text-muted-foreground mt-1"
+              speed={30}
+              delay={2000}
+            />
+          </FadeInText>
         </div>
         
-        <div className="flex items-center gap-3">
+        <FadeInText direction="left" delay={2.5} duration={1} className="flex items-center gap-3">
           <Select value={timeRange} onValueChange={setTimeRange}>
             <SelectTrigger className="w-32">
               <SelectValue />
@@ -100,11 +114,12 @@ export const AdvancedAnalytics = () => {
             <Share2 className="h-4 w-4 mr-2" />
             Share
           </Button>
-        </div>
-      </div>
+        </FadeInText>
+      </FadeInText>
 
       {/* Key Insights */}
-      <Card>
+      <FadeInText direction="up" delay={3.5} duration={1}>
+        <MagicCard className="hover:shadow-glow transition-all duration-500">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-primary" />
@@ -133,10 +148,12 @@ export const AdvancedAnalytics = () => {
             ))}
           </div>
         </CardContent>
-      </Card>
+      </MagicCard>
+      </FadeInText>
 
       {/* Analytics Tabs */}
-      <Tabs defaultValue="health" className="w-full">
+      <FadeInText direction="up" delay={4} duration={1.5}>
+        <Tabs defaultValue="health" className="w-full">
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="health">Health Trends</TabsTrigger>
           <TabsTrigger value="wealth">Wealth Analysis</TabsTrigger>
@@ -436,6 +453,7 @@ export const AdvancedAnalytics = () => {
           </div>
         </TabsContent>
       </Tabs>
+      </FadeInText>
     </div>
   );
 };

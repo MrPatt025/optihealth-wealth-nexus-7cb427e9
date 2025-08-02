@@ -12,6 +12,10 @@ import { useToast } from "@/hooks/use-toast";
 import { AnimatedIcon } from "@/components/ui/animated-icon";
 import { EnhancedCard } from "@/components/ui/enhanced-card";
 import { IconShowcase } from "@/components/ui/icon-showcase";
+import { SplitText } from "@/components/ui/split-text";
+import { FadeInText } from "@/components/ui/fade-in-text";
+import { Typewriter } from "@/components/ui/typewriter";
+import { MagicCard } from "@/components/ui/magic-card";
 
 interface Plugin {
   id: string;
@@ -319,17 +323,27 @@ export const PluginMarketplace = () => {
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-6">
       {/* Header */}
-      <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-          Plugin Marketplace
-        </h1>
-        <p className="text-muted-foreground max-w-2xl mx-auto">
-          Extend your OptiHealth-Wealth experience with powerful plugins. From advanced analytics to wellness tools.
-        </p>
-      </div>
+      <FadeInText direction="up" duration={1} className="text-center space-y-2">
+        <SplitText
+          text="Plugin Marketplace"
+          className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent block"
+          delay={50}
+          duration={0.8}
+          from={{ opacity: 0, y: 50, rotateX: -20 }}
+          to={{ opacity: 1, y: 0, rotateX: 0 }}
+        />
+        <FadeInText direction="up" delay={1.5} duration={1}>
+          <Typewriter
+            text="Extend your OptiHealth-Wealth experience with powerful plugins. From advanced analytics to wellness tools."
+            className="text-muted-foreground max-w-2xl mx-auto"
+            speed={25}
+            delay={2000}
+          />
+        </FadeInText>
+      </FadeInText>
 
       {/* Search */}
-      <div className="relative max-w-md mx-auto">
+      <FadeInText direction="up" delay={3} duration={1} className="relative max-w-md mx-auto">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
           placeholder="Search plugins..."
@@ -337,7 +351,7 @@ export const PluginMarketplace = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
           className="pl-10"
         />
-      </div>
+      </FadeInText>
 
       {/* Category Filter */}
       <div className="flex justify-center">
@@ -391,7 +405,8 @@ export const PluginMarketplace = () => {
       </Tabs>
 
       {/* Developer Info */}
-      <Card className="bg-gradient-primary/5 border-primary/20">
+      <FadeInText direction="up" delay={4} duration={1}>
+        <MagicCard className="bg-gradient-primary/5 border-primary/20 hover:shadow-glow transition-all duration-500">
         <CardHeader>
           <CardTitle className="text-center">Build Your Own Plugin</CardTitle>
           <CardDescription className="text-center">
@@ -406,7 +421,8 @@ export const PluginMarketplace = () => {
           </div>
           <Button variant="premium">View Developer Docs</Button>
         </CardContent>
-      </Card>
+      </MagicCard>
+      </FadeInText>
     </div>
   );
 };
