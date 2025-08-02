@@ -7,6 +7,9 @@ import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 import { MagicCard } from "@/components/ui/magic-card";
 import { AnimatedBackground } from "@/components/ui/animated-background";
 import { FloatingElements } from "@/components/ui/floating-elements";
+import { SplitText } from "@/components/ui/split-text";
+import { Typewriter } from "@/components/ui/typewriter";
+import { FadeInText } from "@/components/ui/fade-in-text";
 
 export const HeroSection = () => {
   return (
@@ -41,26 +44,59 @@ export const HeroSection = () => {
             </AnimatedGradientText>
           </div>
           
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-lexend font-black mb-8 animate-fade-in tracking-tighter leading-[0.9]">
-            <span className="bg-gradient-primary bg-clip-text text-transparent animate-[gradient_6s_ease-in-out_infinite] bg-[length:200%_auto]">
-              Your AI
-            </span>
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-lexend font-black mb-8 tracking-tighter leading-[0.9]">
+            <SplitText
+              text="Your AI"
+              className="bg-gradient-primary bg-clip-text text-transparent block"
+              delay={50}
+              duration={0.8}
+              ease="elastic.out(1, 0.3)"
+              from={{ opacity: 0, y: 100, rotateX: -90 }}
+              to={{ opacity: 1, y: 0, rotateX: 0 }}
+            />
             <br />
-            <span className="text-foreground relative font-lexend">
-              Companion
+            <FadeInText
+              direction="up"
+              delay={1.2}
+              duration={1}
+              className="text-foreground relative font-lexend inline-block"
+            >
+              <Typewriter
+                text="Companion"
+                speed={80}
+                delay={2000}
+                className="relative"
+              />
               <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-accent/20 blur-xl animate-[glow_4s_ease-in-out_infinite] -z-10" />
-            </span>
+            </FadeInText>
           </h1>
           
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed font-inter font-light tracking-wide">
-            The world's first Gen-Z-centric AI platform that seamlessly blends 
+          <FadeInText
+            direction="up"
+            delay={3.5}
+            duration={1.2}
+            className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed font-inter font-light tracking-wide"
+          >
+            <SplitText
+              text="The world's first Gen-Z-centric AI platform that seamlessly blends"
+              splitType="words"
+              delay={30}
+              duration={0.6}
+              from={{ opacity: 0, y: 20 }}
+              to={{ opacity: 1, y: 0 }}
+            />
             <span className="text-accent font-semibold font-lexend"> health optimization</span> and
             <span className="text-primary-glow font-semibold"> financial intelligence</span> 
             with Netflix-style UX and ironclad privacy.
-          </p>
+          </FadeInText>
 
           {/* Enhanced Feature Highlights with MagicCard */}
-          <div className="flex flex-wrap justify-center gap-6 mb-12">
+          <FadeInText
+            direction="up"
+            delay={5}
+            duration={0.8}
+            className="flex flex-wrap justify-center gap-6 mb-12"
+          >
             <MagicCard 
               className="p-6 bg-gradient-glass backdrop-blur-md border-primary/30 hover:border-primary/50 transition-all duration-500 hover:scale-105 hover:shadow-glow"
               gradientColor="rgba(var(--primary-glow), 0.15)"
@@ -90,10 +126,15 @@ export const HeroSection = () => {
                 <span className="font-semibold font-lexend">Real-Time Optimization</span>
               </div>
             </MagicCard>
-          </div>
+          </FadeInText>
 
           {/* Enhanced CTA Buttons with MagicUI effects */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+          <FadeInText
+            direction="up"
+            delay={6}
+            duration={1}
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+          >
             <Button 
               size="lg" 
               className="group relative overflow-hidden bg-gradient-primary hover:bg-gradient-hero shadow-glow hover:shadow-lg hover:scale-105 transition-all duration-500 px-8 py-4 text-lg font-semibold border-0"
@@ -117,7 +158,7 @@ export const HeroSection = () => {
                 <div className="ml-3 w-3 h-3 bg-primary rounded-full animate-pulse" />
               </span>
             </Button>
-          </div>
+          </FadeInText>
 
           {/* Trust Indicators */}
           <div className="mt-16 text-center">
