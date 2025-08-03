@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Shield, Brain, Zap, Play } from "lucide-react";
+import { ProgressiveImage } from "@/components/ui/progressive-image";
+import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import heroImage from "@/assets/hero-image.jpg";
 import heroTech from "@/assets/hero-tech.jpg";
 import { Particles } from "@/components/ui/particles";
@@ -12,8 +14,10 @@ import { Typewriter } from "@/components/ui/typewriter";
 import { FadeInText } from "@/components/ui/fade-in-text";
 
 export const HeroSection = () => {
+  const { ref, isIntersecting } = useIntersectionObserver({ threshold: 0.1 });
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section ref={ref} className="relative min-h-screen flex items-center justify-center overflow-hidden will-change-transform">
       {/* Enhanced background layers with MagicUI + Lightswind fusion */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"

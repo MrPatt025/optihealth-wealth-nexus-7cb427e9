@@ -10,6 +10,8 @@ import { AnimatedBackground } from "@/components/ui/animated-background";
 import { SplitText } from "@/components/ui/split-text";
 import { FadeInText } from "@/components/ui/fade-in-text";
 import { Typewriter } from "@/components/ui/typewriter";
+import { ProgressiveImage } from "@/components/ui/progressive-image";
+import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import dashboardBg from "@/assets/dashboard-bg.jpg";
 
 const healthMetrics = [
@@ -27,8 +29,10 @@ const financeMetrics = [
 ];
 
 export const DashboardPreview = () => {
+  const { ref, isIntersecting } = useIntersectionObserver({ threshold: 0.1 });
+
   return (
-    <section id="dashboard" className="py-24 bg-gradient-to-b from-secondary/50 to-background relative overflow-hidden">
+    <section ref={ref} id="dashboard" className="py-24 bg-gradient-to-b from-secondary/50 to-background relative overflow-hidden will-change-transform">
       <div 
         className="absolute inset-0 bg-cover bg-center opacity-5"
         style={{ backgroundImage: `url(${dashboardBg})` }}

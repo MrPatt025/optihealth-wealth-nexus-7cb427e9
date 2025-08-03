@@ -153,12 +153,74 @@ All colors MUST be HSL.
     scroll-behavior: smooth;
   }
   
+  /* Hardware acceleration for animations */
+  .animate-fade-in,
+  .animate-slide-up,
+  .hover-glow,
+  .loading-shimmer {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+  }
+  
+  /* Optimize repaints */
+  .magic-card,
+  .interactive-card,
+  .enhanced-card {
+    contain: layout style paint;
+  }
+  
   @media (prefers-reduced-motion: reduce) {
     * {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
+    }
+  }
+  
+  /* Improved loading states */
+  .loading-state {
+    @apply animate-pulse bg-gradient-to-r from-muted via-muted/50 to-muted;
+  }
+  
+  /* Better focus indicators */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
+  }
+  
+  /* Reduced motion support */
+  .reduce-motion * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  /* Improved button interactions */
+  .button-premium {
+    @apply bg-gradient-primary text-primary-foreground shadow-glow transition-all duration-300 hover:scale-105 hover:shadow-lg focus-ring;
+  }
+  
+  /* Enhanced card interactions */
+  .card-interactive {
+    @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-glow cursor-pointer focus-ring;
+  }
+  
+  /* Skeleton loading improvements */
+  .skeleton {
+    @apply animate-pulse bg-gradient-to-r from-muted via-muted/50 to-muted bg-[length:200%_100%];
+    animation: shimmer 1.5s infinite;
+  }
+  
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .bg-gradient-primary,
+    .bg-gradient-accent {
+      @apply bg-primary;
+    }
+    
+    .text-gradient {
+      @apply text-primary bg-none;
     }
   }
 }
