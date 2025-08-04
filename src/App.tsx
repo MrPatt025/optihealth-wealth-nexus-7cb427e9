@@ -12,6 +12,7 @@ import { AccessibilitySkipLinks } from "@/components/ui/accessibility-skip-links
 import { ReducedMotionProvider } from "@/components/ui/reduced-motion-provider";
 import { createLazyComponent } from "@/components/ui/lazy-component";
 import { useAdvancedPerformance } from "@/hooks/useAdvancedPerformance";
+import { ResourceManager } from "@/components/ui/resource-manager";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -42,6 +43,7 @@ function App() {
               <Toaster />
               <Sonner />
               <PerformanceMonitor />
+              <ResourceManager />
               <BrowserRouter>
                 <Routes>
                   <Route path="/" element={<Index />} />
