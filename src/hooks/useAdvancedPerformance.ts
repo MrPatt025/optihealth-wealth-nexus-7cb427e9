@@ -49,9 +49,9 @@ export const useAdvancedPerformance = () => {
       });
     });
 
-    // Clean up unused DOM nodes
-    const unusedNodes = document.querySelectorAll('[data-cleanup]');
-    unusedNodes.forEach(node => node.remove());
+    // Clean up abandoned DOM nodes with cleanup attribute
+    const cleanupNodes = document.querySelectorAll('[data-cleanup]');
+    cleanupNodes.forEach(node => node.remove());
   }, []);
 
   // Virtual scrolling for large lists

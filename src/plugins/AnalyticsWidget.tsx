@@ -27,8 +27,7 @@ const AnalyticsWidget: React.FC<AnalyticsWidgetProps> = ({ settings = {} }) => {
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      // Simulate data refresh
-      console.log('Analytics Widget: Refreshing data...');
+      // Simulate data refresh - removed console.log for production
     }, refreshInterval);
 
     return () => clearInterval(interval);

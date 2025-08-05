@@ -7,10 +7,10 @@ export function ResourceManager() {
       return;
     }
 
-    // Simplified cleanup - only run once per minute
+    // Optimized cleanup - target specific cleanup tasks
     const cleanup = () => {
       try {
-        // Clean up only obviously unused elements
+        // Clean up marked elements
         const removedElements = document.querySelectorAll('[data-removed]');
         removedElements.forEach(el => el.remove());
       } catch (e) {

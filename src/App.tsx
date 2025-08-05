@@ -13,6 +13,8 @@ import { ReducedMotionProvider } from "@/components/ui/reduced-motion-provider";
 import { createLazyComponent } from "@/components/ui/lazy-component";
 import { useAdvancedPerformance } from "@/hooks/useAdvancedPerformance";
 import { ResourceManager } from "@/components/ui/resource-manager";
+import { HealthMonitor } from "@/components/ui/health-monitor";
+import { runMaintenance } from "@/lib/maintenance";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -24,12 +26,18 @@ const queryClient = new QueryClient();
 function App() {
   const { preloadResources } = useAdvancedPerformance();
 
-  // Preload critical resources
+  // Preload critical resources and run maintenance
   React.useEffect(() => {
     preloadResources([
       '/assets/hero-image.jpg',
       '/assets/dashboard-bg.jpg'
     ]);
+
+    // Run maintenance in production
+    const healthStatus = runMaintenance();
+    if (import.meta.env.DEV && healthStatus) {
+      console.log('App Health Status:', healthStatus);
+    }
   }, [preloadResources]);
 
   return (
@@ -44,6 +52,7 @@ function App() {
               <Sonner />
               <PerformanceMonitor />
               <ResourceManager />
+              <HealthMonitor />
               <BrowserRouter>
                 <Routes>
                   <Route path="/" element={<Index />} />
