@@ -2,25 +2,23 @@ import { useEffect } from 'react';
 
 export function ResourceManager() {
   useEffect(() => {
-    // Cleanup unused resources periodically
-    const cleanup = () => {
-      // Clean up unused images
-      const images = document.querySelectorAll('img[data-cleanup]');
-      images.forEach(img => {
-        const rect = img.getBoundingClientRect();
-        const isVisible = rect.top < window.innerHeight + 1000 && rect.bottom > -1000;
-        if (!isVisible) {
-          img.removeAttribute('src');
-          img.setAttribute('data-cleanup', 'true');
-        }
-      });
+    // Skip resource management in development to prevent file watcher issues
+    if (import.meta.env.DEV) {
+      return;
+    }
 
-      // Clean up event listeners on removed elements
-      const removedElements = document.querySelectorAll('[data-removed]');
-      removedElements.forEach(el => el.remove());
+    // Simplified cleanup - only run once per minute
+    const cleanup = () => {
+      try {
+        // Clean up only obviously unused elements
+        const removedElements = document.querySelectorAll('[data-removed]');
+        removedElements.forEach(el => el.remove());
+      } catch (e) {
+        // Silent fail to prevent crashes
+      }
     };
 
-    const interval = setInterval(cleanup, 30000); // Every 30 seconds
+    const interval = setInterval(cleanup, 60000); // Every minute instead of 30 seconds
 
     return () => clearInterval(interval);
   }, []);

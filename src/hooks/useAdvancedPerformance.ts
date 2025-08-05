@@ -135,56 +135,31 @@ export const useAdvancedPerformance = () => {
     });
   }, []);
 
-  // Performance monitoring with throttling
+  // Simplified performance monitoring (disabled in development to prevent file watcher issues)
   const monitorPerformance = useCallback(() => {
-    let longTaskCount = 0;
-    let memoryCheckInterval: number | null = null;
-    
-    // Monitor long tasks with throttling
-    if ('PerformanceObserver' in window) {
-      const longTaskObserver = new PerformanceObserver((list) => {
-        for (const entry of list.getEntries()) {
-          if (entry.duration > 100) { // Increased threshold to reduce noise
-            longTaskCount++;
-            if (longTaskCount <= 3) { // Limit logging to prevent spam
-              console.warn('Performance: Long task detected', { 
-                duration: Math.round(entry.duration), 
-                name: entry.name 
-              });
-            }
-          }
-        }
-      });
-      
-      try {
-        longTaskObserver.observe({ entryTypes: ['longtask'] });
-      } catch (e) {
-        console.debug('Long task monitoring not supported');
-      }
+    // Skip monitoring in development mode to prevent EMFILE errors
+    if (import.meta.env.DEV) {
+      return () => {};
     }
 
-    // Optimized memory monitoring
+    let memoryCheckInterval: number | null = null;
+    
+    // Simplified memory monitoring only
     if ('memory' in performance) {
       const checkMemory = () => {
         try {
           const memory = (performance as any).memory;
           const usage = memory.usedJSHeapSize / memory.totalJSHeapSize;
           
-          if (usage > 0.85) { // Lower threshold for earlier cleanup
-            console.debug('Memory usage high:', Math.round(usage * 100) + '%');
+          if (usage > 0.9) {
             cleanupMemory();
-            
-            // Force garbage collection if available
-            if ('gc' in window && typeof (window as any).gc === 'function') {
-              (window as any).gc();
-            }
           }
         } catch (e) {
-          console.debug('Memory monitoring failed');
+          // Silent fail
         }
       };
       
-      memoryCheckInterval = window.setInterval(checkMemory, 60000); // Check every minute
+      memoryCheckInterval = window.setInterval(checkMemory, 120000); // Check every 2 minutes
     }
 
     return () => {
