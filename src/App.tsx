@@ -15,6 +15,7 @@ import { useAdvancedPerformance } from "@/hooks/useAdvancedPerformance";
 import { ResourceManager } from "@/components/ui/resource-manager";
 import { HealthMonitor } from "@/components/ui/health-monitor";
 import { runMaintenance } from "@/lib/maintenance";
+import { memoryUtils } from "@/hooks/useAdvancedCache";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -26,17 +27,30 @@ const queryClient = new QueryClient();
 function App() {
   const { preloadResources } = useAdvancedPerformance();
 
-  // Preload critical resources and run maintenance
+  // Enhanced resource preloading and maintenance
   React.useEffect(() => {
     preloadResources([
       '/assets/hero-image.jpg',
       '/assets/dashboard-bg.jpg'
     ]);
 
-    // Run maintenance in production
+    // Advanced maintenance and memory management
     const healthStatus = runMaintenance();
     if (import.meta.env.DEV && healthStatus) {
-      console.log('App Health Status:', healthStatus);
+      console.log('🚀 App Health Status:', healthStatus);
+      console.log('💾 Memory Info:', memoryUtils.getMemoryInfo());
+    }
+
+    // Periodic cleanup for production
+    if (import.meta.env.PROD) {
+      const cleanupInterval = setInterval(() => {
+        const memInfo = memoryUtils.getMemoryInfo();
+        if (memInfo && memInfo.usage > 0.8) {
+          memoryUtils.forceGC();
+        }
+      }, 60000); // Every minute
+
+      return () => clearInterval(cleanupInterval);
     }
   }, [preloadResources]);
 
