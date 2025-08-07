@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 interface StaggeredFadeInProps {
-  children: React.ReactNode[];
+  children: React.ReactNode;
   delay?: number;
   duration?: number;
   className?: string;
@@ -23,7 +23,8 @@ export function StaggeredFadeIn({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          children.forEach((_, index) => {
+          const childArray = React.Children.toArray(children);
+          childArray.forEach((_, index) => {
             setTimeout(() => {
               setVisibleItems(prev => {
                 const newState = [...prev];
@@ -44,6 +45,8 @@ export function StaggeredFadeIn({
     return () => observer.disconnect();
   }, [children, delay]);
 
+  const childArray = React.Children.toArray(children);
+
   const getTransform = (isVisible: boolean) => {
     if (isVisible) return 'translate(0, 0)';
     
@@ -58,7 +61,7 @@ export function StaggeredFadeIn({
 
   return (
     <div ref={containerRef} className={cn('space-y-4', className)}>
-      {children.map((child, index) => (
+      {childArray.map((child, index) => (
         <div
           key={index}
           className="transition-all ease-out"

@@ -21,6 +21,10 @@ import NotFound from "./pages/NotFound";
 
 // Lazy load pages สำหรับ code splitting
 const DesignSystem = createLazyComponent(() => import("./pages/DesignSystem"));
+const Dashboard = createLazyComponent(() => import("./pages/Dashboard"));
+const Analytics = createLazyComponent(() => import("./pages/Analytics"));
+const Community = createLazyComponent(() => import("./pages/Community"));
+const Profile = createLazyComponent(() => import("./pages/Profile"));
 
 const queryClient = new QueryClient();
 
@@ -70,6 +74,10 @@ function App() {
               <BrowserRouter>
                 <Routes>
                   <Route path="/" element={<Index />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/analytics" element={<Analytics />} />
+                  <Route path="/community" element={<Community />} />
+                  <Route path="/profile" element={<Profile />} />
                   <Route path="/design-system" element={<DesignSystem />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
