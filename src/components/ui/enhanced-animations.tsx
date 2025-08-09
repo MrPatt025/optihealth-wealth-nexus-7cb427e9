@@ -16,14 +16,14 @@ export function StaggeredFadeIn({
   className,
   direction = 'up'
 }: StaggeredFadeInProps) {
-  const [visibleItems, setVisibleItems] = useState<boolean[]>(new Array(children.length).fill(false));
+  const childArray = React.Children.toArray(children);
+  const [visibleItems, setVisibleItems] = useState<boolean[]>(new Array(childArray.length).fill(false));
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          const childArray = React.Children.toArray(children);
           childArray.forEach((_, index) => {
             setTimeout(() => {
               setVisibleItems(prev => {
@@ -43,9 +43,7 @@ export function StaggeredFadeIn({
     }
 
     return () => observer.disconnect();
-  }, [children, delay]);
-
-  const childArray = React.Children.toArray(children);
+  }, [childArray, delay]);
 
   const getTransform = (isVisible: boolean) => {
     if (isVisible) return 'translate(0, 0)';
@@ -276,4 +274,45 @@ export function ScrollProgress({
       }}
     />
   );
+}
+
+interface AnimatedCounterProps {
+  from?: number;
+  to: number;
+  duration?: number;
+  formatter?: (value: number) => string;
+}
+
+export function AnimatedCounter({
+  from = 0,
+  to,
+  duration = 2000,
+  formatter = (val) => val.toString()
+}: AnimatedCounterProps) {
+  const [count, setCount] = useState(from);
+  const countRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const startTime = Date.now();
+    const difference = to - from;
+
+    const updateCount = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing function for smooth animation
+      const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+      const currentCount = Math.round(from + difference * easeOutCubic);
+      
+      setCount(currentCount);
+
+      if (progress < 1) {
+        requestAnimationFrame(updateCount);
+      }
+    };
+
+    updateCount();
+  }, [from, to, duration]);
+
+  return <span ref={countRef}>{formatter(count)}</span>;
 }
