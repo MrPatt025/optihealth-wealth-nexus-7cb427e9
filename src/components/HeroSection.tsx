@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles, Zap, Shield } from "lucide-react";
+import { ArrowRight, Sparkles, Zap, Shield, Play, Award, TrendingUp, Users } from "lucide-react";
 import { AnimatedBackground } from "@/components/ui/animated-background";
 import { GlassMorphism, MagneticElement } from "@/components/ui/advanced-effects";
 import { ParticleSystem, FluidGradient } from "@/components/ui/advanced-backgrounds";
@@ -8,8 +8,11 @@ import { FadeInText } from "@/components/ui/fade-in-text";
 import { Typewriter } from "@/components/ui/typewriter";
 import { MicroInteraction } from "@/components/ui/micro-interactions";
 import { HolographicCard, NeonText, QuantumOrb, LiquidButton } from "@/components/ui/premium-effects";
-import { StaggeredFadeIn, ScrollProgress } from "@/components/ui/enhanced-animations";
+import { StaggeredFadeIn, ScrollProgress, FluidText, ParallaxElement } from "@/components/ui/enhanced-animations";
 import { useAdvancedPerformance } from "@/hooks/useAdvancedPerformance";
+import ThreeScene from "@/components/ui/three-scene";
+import { ThreeCard, ThreeText } from "@/components/ui/three-card";
+import ThreeBackground from "@/components/ui/three-background";
 import heroImage from "@/assets/hero-image.jpg";
 
 export const HeroSection = () => {
@@ -20,16 +23,19 @@ export const HeroSection = () => {
       {/* Scroll Progress */}
       <ScrollProgress />
       
+      {/* 3D Background Layer */}
+      <ThreeBackground className="opacity-40" />
+      
       {/* Enhanced Background Layers */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-background/90" />
+      <div className="absolute inset-0 bg-gradient-to-br from-background/90 via-background/80 to-background/70" />
       
       {/* Quantum Orbs */}
-      <div className="absolute top-20 left-20">
+      <ParallaxElement speed={0.3} className="absolute top-20 left-20">
         <QuantumOrb size={150} colors={['#ff006e', '#8338ec', '#3a86ff']} />
-      </div>
-      <div className="absolute bottom-20 right-20">
+      </ParallaxElement>
+      <ParallaxElement speed={-0.2} className="absolute bottom-20 right-20">
         <QuantumOrb size={100} colors={['#fb8500', '#ffb703', '#8ecae6']} />
-      </div>
+      </ParallaxElement>
       
       {/* Particle System */}
       <ParticleSystem 
@@ -70,12 +76,20 @@ export const HeroSection = () => {
           <StaggeredFadeIn delay={150} direction="up">
             <div className="space-y-8">
               <MicroInteraction type="float">
-                <NeonText 
-                  text="Next-Gen Health & Wealth Intelligence"
-                  className="text-5xl md:text-7xl font-bold leading-tight"
-                  color="#00ff88"
-                  glowIntensity={1.2}
-                />
+                <div className="space-y-4">
+                  <ThreeText 
+                    text="Next-Gen"
+                    className="mb-2"
+                    size={1.5}
+                    color="#00ff88"
+                    height="80px"
+                  />
+                  <FluidText 
+                    text="Health & Wealth Intelligence"
+                    colors={['hsl(var(--primary))', 'hsl(var(--primary-glow))', 'hsl(var(--accent))']}
+                    className="text-4xl md:text-6xl font-bold leading-tight"
+                  />
+                </div>
               </MicroInteraction>
               
               <MicroInteraction type="breath">
@@ -137,8 +151,62 @@ export const HeroSection = () => {
                 </Button>
               </MicroInteraction>
             </div>
+            
+            {/* 3D Feature Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+              <StaggeredFadeIn delay={200}>
+                <ThreeCard className="h-48" color="#ff006e" intensity={0.8}>
+                  <div className="text-center">
+                    <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-r from-red-500 to-pink-500 flex items-center justify-center">
+                      <Award className="w-6 h-6 text-white" />
+                    </div>
+                    <h3 className="text-lg font-bold mb-2 text-white">Health Tracking</h3>
+                    <p className="text-gray-200 text-sm">AI-powered wellness monitoring</p>
+                  </div>
+                </ThreeCard>
+
+                <ThreeCard className="h-48" color="#00ff88" intensity={0.8}>
+                  <div className="text-center">
+                    <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center">
+                      <TrendingUp className="w-6 h-6 text-white" />
+                    </div>
+                    <h3 className="text-lg font-bold mb-2 text-white">Wealth Management</h3>
+                    <p className="text-gray-200 text-sm">Intelligent financial strategies</p>
+                  </div>
+                </ThreeCard>
+
+                <ThreeCard className="h-48" color="#8338ec" intensity={0.8}>
+                  <div className="text-center">
+                    <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-r from-purple-500 to-violet-500 flex items-center justify-center">
+                      <Users className="w-6 h-6 text-white" />
+                    </div>
+                    <h3 className="text-lg font-bold mb-2 text-white">Community</h3>
+                    <p className="text-gray-200 text-sm">Connect with like-minded people</p>
+                  </div>
+                </ThreeCard>
+              </StaggeredFadeIn>
+            </div>
           </StaggeredFadeIn>
         </HolographicCard>
+        
+        {/* 3D Interactive Scene Section */}
+        <div className="relative z-10 mt-20">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <NeonText text="Experience the Future" color="#00ff88" />
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Immerse yourself in our cutting-edge 3D interface
+              </p>
+            </div>
+            
+            <div className="relative h-96 rounded-2xl overflow-hidden border border-white/10">
+              <ThreeScene height="400px" className="rounded-2xl" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
