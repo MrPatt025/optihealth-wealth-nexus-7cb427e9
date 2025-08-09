@@ -4,7 +4,6 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { PluginProvider } from "@/contexts/PluginContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { I18nProvider } from "@/contexts/I18nContext";
 import { PerformanceMonitor } from "@/components/ui/performance-monitor";
@@ -19,11 +18,9 @@ import { memoryUtils } from "@/hooks/useAdvancedCache";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
-// Lazy load pages สำหรับ code splitting
-const DesignSystem = createLazyComponent(() => import("./pages/DesignSystem"));
+// Lazy load pages for code splitting
 const Dashboard = createLazyComponent(() => import("./pages/Dashboard"));
 const Analytics = createLazyComponent(() => import("./pages/Analytics"));
-const Community = createLazyComponent(() => import("./pages/Community"));
 const Profile = createLazyComponent(() => import("./pages/Profile"));
 
 const queryClient = new QueryClient();
@@ -63,29 +60,25 @@ function App() {
     <ReducedMotionProvider>
       <I18nProvider>
         <ThemeProvider>
-          <PluginProvider>
-            <TooltipProvider>
-              <AccessibilitySkipLinks />
-              <Toaster />
-              <Sonner />
-              <PerformanceMonitor />
-              <ResourceManager />
-              <HealthMonitor />
-              <BrowserRouter>
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/analytics" element={<Analytics />} />
-                  <Route path="/community" element={<Community />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/design-system" element={<DesignSystem />} />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </PluginProvider>
-  </ThemeProvider>
+          <TooltipProvider>
+            <AccessibilitySkipLinks />
+            <Toaster />
+            <Sonner />
+            <PerformanceMonitor />
+            <ResourceManager />
+            <HealthMonitor />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/analytics" element={<Analytics />} />
+                <Route path="/profile" element={<Profile />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </ThemeProvider>
 </I18nProvider>
 </ReducedMotionProvider>
 </QueryClientProvider>
