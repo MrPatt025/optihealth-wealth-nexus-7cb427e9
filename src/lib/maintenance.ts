@@ -4,35 +4,63 @@
  */
 
 export const maintenanceUtils = {
-  // Clean up unused event listeners
+  // Safe cleanup of unused event listeners
   cleanupEventListeners: () => {
-    const events = ['scroll', 'resize', 'mousemove', 'click'];
-    events.forEach(event => {
-      const listeners = document.querySelectorAll(`[data-${event}-listener]`);
-      listeners.forEach(el => {
-        const listener = (el as any)[`_${event}Listener`];
-        if (listener) {
-          el.removeEventListener(event, listener);
-          delete (el as any)[`_${event}Listener`];
-          el.removeAttribute(`data-${event}-listener`);
+    try {
+      const events = ['scroll', 'resize', 'mousemove', 'click'];
+      events.forEach(event => {
+        try {
+          const listeners = document.querySelectorAll(`[data-${event}-listener]`);
+          listeners.forEach(el => {
+            try {
+              const listener = (el as any)[`_${event}Listener`];
+              if (listener && el.parentNode) {
+                el.removeEventListener(event, listener);
+                delete (el as any)[`_${event}Listener`];
+                el.removeAttribute(`data-${event}-listener`);
+              }
+            } catch (e) {
+              // Silent fail for individual listeners
+            }
+          });
+        } catch (e) {
+          // Silent fail for event type
         }
       });
-    });
+    } catch (e) {
+      console.warn('Event listener cleanup failed:', e);
+    }
   },
 
-  // Clean up abandoned DOM nodes
+  // Safe cleanup of abandoned DOM nodes
   cleanupDOMNodes: () => {
-    const selectors = [
-      '[data-cleanup]',
-      '[data-removed]',
-      '.cleanup-target',
-      '[aria-hidden="true"]:empty'
-    ];
-    
-    selectors.forEach(selector => {
-      const nodes = document.querySelectorAll(selector);
-      nodes.forEach(node => node.remove());
-    });
+    try {
+      const selectors = [
+        '[data-cleanup]',
+        '[data-removed]',
+        '.cleanup-target',
+        '[aria-hidden="true"]:empty'
+      ];
+      
+      selectors.forEach(selector => {
+        try {
+          const nodes = document.querySelectorAll(selector);
+          nodes.forEach(node => {
+            try {
+              if (node.parentNode) {
+                node.parentNode.removeChild(node);
+              }
+            } catch (e) {
+              // Silent fail for individual nodes
+            }
+          });
+        } catch (e) {
+          // Silent fail for selector
+        }
+      });
+    } catch (e) {
+      console.warn('DOM cleanup failed:', e);
+    }
   },
 
   // Performance check

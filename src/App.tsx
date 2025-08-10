@@ -35,11 +35,15 @@ function App() {
       '/assets/dashboard-bg.jpg'
     ]);
 
-    // Advanced maintenance and memory management
-    const healthStatus = runMaintenance();
-    if (import.meta.env.DEV && healthStatus) {
-      console.log('🚀 App Health Status:', healthStatus);
-      console.log('💾 Memory Info:', memoryUtils.getMemoryInfo());
+    // Safe maintenance and memory management
+    try {
+      const healthStatus = runMaintenance();
+      if (import.meta.env.DEV && healthStatus) {
+        console.log('🚀 App Health Status:', healthStatus);
+        console.log('💾 Memory Info:', memoryUtils.getMemoryInfo());
+      }
+    } catch (e) {
+      console.warn('Maintenance failed:', e);
     }
 
     // Periodic cleanup for production

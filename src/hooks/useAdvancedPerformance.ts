@@ -33,25 +33,49 @@ export const useAdvancedPerformance = () => {
     };
   }, []);
 
-  // Memory cleanup
+  // Memory cleanup with safe DOM manipulation
   const cleanupMemory = useCallback(() => {
-    // Clean up event listeners
-    const events = ['scroll', 'resize', 'mousemove'];
-    events.forEach(event => {
-      const listeners = document.querySelectorAll(`[data-${event}-listener]`);
-      listeners.forEach(el => {
-        const listener = (el as any)[`_${event}Listener`];
-        if (listener) {
-          el.removeEventListener(event, listener);
-          delete (el as any)[`_${event}Listener`];
-          el.removeAttribute(`data-${event}-listener`);
+    try {
+      // Clean up event listeners safely
+      const events = ['scroll', 'resize', 'mousemove'];
+      events.forEach(event => {
+        try {
+          const listeners = document.querySelectorAll(`[data-${event}-listener]`);
+          listeners.forEach(el => {
+            try {
+              const listener = (el as any)[`_${event}Listener`];
+              if (listener && el.parentNode) {
+                el.removeEventListener(event, listener);
+                delete (el as any)[`_${event}Listener`];
+                el.removeAttribute(`data-${event}-listener`);
+              }
+            } catch (e) {
+              console.warn(`Failed to cleanup ${event} listener:`, e);
+            }
+          });
+        } catch (e) {
+          console.warn(`Failed to cleanup ${event} listeners:`, e);
         }
       });
-    });
 
-    // Clean up abandoned DOM nodes with cleanup attribute
-    const cleanupNodes = document.querySelectorAll('[data-cleanup]');
-    cleanupNodes.forEach(node => node.remove());
+      // Safe cleanup of DOM nodes
+      try {
+        const cleanupNodes = document.querySelectorAll('[data-cleanup]');
+        cleanupNodes.forEach(node => {
+          try {
+            if (node.parentNode) {
+              node.parentNode.removeChild(node);
+            }
+          } catch (e) {
+            console.warn('Failed to remove cleanup node:', e);
+          }
+        });
+      } catch (e) {
+        console.warn('Failed to query cleanup nodes:', e);
+      }
+    } catch (e) {
+      console.warn('Memory cleanup failed:', e);
+    }
   }, []);
 
   // Virtual scrolling for large lists
